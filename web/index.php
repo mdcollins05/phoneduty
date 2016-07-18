@@ -17,7 +17,6 @@ require __DIR__ . '/../vendor/autoload.php';
 $scheduleID      = getenv('PAGERDUTY_SCHEDULE_ID');
 $APItoken        = getenv('PAGERDUTY_API_TOKEN');
 $serviceAPItoken = getenv('PAGERDUTY_SERVICE_API_TOKEN');
-$domain          = getenv('PAGERDUTY_DOMAIN');
 $greeting        = getenv('PHONEDUTY_ANNOUNCE_GREETING');
 $validate_human  = getenv('PHONEDUTY_CHECK_FOR_HUMAN');
 
@@ -38,7 +37,7 @@ if (isset($_POST['CallSid'])) {
 session_start();
 $_SESSION['engineer_accepted_call'] = false;
 
-$pagerduty = new \Vend\Phoneduty\Pagerduty($APItoken, $serviceAPItoken, $domain);
+$pagerduty = new \Vend\Phoneduty\Pagerduty($APItoken, $serviceAPItoken);
 
 $userID = $pagerduty->getOncallUserForSchedule($scheduleID);
 $user = $pagerduty->getUserDetails($userID);

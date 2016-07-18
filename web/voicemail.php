@@ -6,7 +6,6 @@ require __DIR__ . '/../vendor/autoload.php';
 $scheduleID      = getenv('PAGERDUTY_SCHEDULE_ID');
 $APItoken        = getenv('PAGERDUTY_API_TOKEN');
 $serviceAPItoken = getenv('PAGERDUTY_SERVICE_API_TOKEN');
-$domain          = getenv('PAGERDUTY_DOMAIN');
 
 // What language should Twilio use?
 $language        = getenv('TWILIO_LANGUAGE');
@@ -21,7 +20,7 @@ if (isset($_POST['CallSid'])) {
 }
 session_start();
 
-$pagerduty = new \Vend\Phoneduty\Pagerduty($APItoken, $serviceAPItoken, $domain);
+$pagerduty = new \Vend\Phoneduty\Pagerduty($APItoken, $serviceAPItoken);
 
 $twilio = new Services_Twilio_Twiml();
 

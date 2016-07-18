@@ -16,10 +16,7 @@
       "description": "The service API key that an incident will be created on if a voicemail is left"
     },
     "PAGERDUTY_API_TOKEN": {
-      "description": "PagerDuty API token"
-    },
-    "PAGERDUTY_DOMAIN": {
-      "description": "The name of your PagerDuty account, as it appears in the URL"
+      "description": "PagerDuty v2 API token"
     },
     "PHONEDUTY_ANNOUNCE_GREETING": {
       "description": "Optional: Any additional greeting to add before the 'The current on-call engineer is' announcement.",
@@ -48,4 +45,3 @@
     }
   }
 }
-
