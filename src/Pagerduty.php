@@ -22,25 +22,25 @@ class Pagerduty {
     protected $httpClient;
 
     /**
-     * Constructor. Expects an API token, service API token and the PagerDuty
-     * domain.
+     * Constructor. Expects a v2 API token and the service API token.
+     *
      *
      * @param string $APItoken
      * @param string $serviceAPItoken
-     * @param string $domain
      *
      */
-    public function __construct($APItoken, $serviceAPItoken, $domain) {
+    public function __construct($APItoken, $serviceAPItoken) {
         $this->APItoken = $APItoken;
         $this->serviceAPItoken = $serviceAPItoken;
-        $this->URL = "https://{$domain}.pagerduty.com/api/v1";
+        $this->URL = "https://api.pagerduty.com";
 
         $this->httpClient = new \GuzzleHttp\Client(
             array('defaults' =>
                 array('headers' =>
                     array(
                         'Content-Type' => 'application/json',
-                        'Authorization' => "Token token={$APItoken}"
+                        'Authorization' => "Token token={$APItoken}",
+                        'Accept' => 'application/vnd.pagerduty+json;version=2'
                     )
                 )
             )
@@ -109,13 +109,13 @@ class Pagerduty {
             $json = json_decode($response->getBody(), true);
 
             foreach($json['user']['contact_methods'] as $method) {
-                if($method['type'] == 'phone') {
+                if($method['type'] == 'phone_contact_method') {
                     $user = array(
                         'full_name'   => $json['user']['name'],
                         'first_name'  => $this->extractFirstName($json['user']['name']),
                         'local_time'    => $this->getCurrentTimeForTimezone(
                             $this->convertFriendlyTimezoneToFull($json['user']['time_zone'])),
-                        'phone_number' => "+{$method['country_code']}{$method['phone_number']}",
+                        'phone_number' => "+{$method['country_code']}{$method['address']}",
                     );
                     break;
                 }
